@@ -1,11 +1,13 @@
 const express = require('express');
-
+const connectDB = require('./config/db');
 const app = express();
 
 // GET
 app.get('/', (req, res) =>
   res.json({ msg: 'Welcome to the PokemonKeeper API!' })
 );
+
+connectDB();
 
 // Define Routes
 app.use('/api/pokemons', require('./routes/pokemons'));
