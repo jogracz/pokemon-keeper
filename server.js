@@ -7,7 +7,11 @@ app.get('/', (req, res) =>
   res.json({ msg: 'Welcome to the PokemonKeeper API!' })
 );
 
+// Connect Database
 connectDB();
+
+// Init Middleware
+app.use(express.json({ extended: false }));
 
 // Define Routes
 app.use('/api/pokemons', require('./routes/pokemons'));
