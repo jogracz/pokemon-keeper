@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/User');
 
@@ -17,13 +18,37 @@ router.post(
       'Please make sure your password has at least 6 characters'
     ).isLength({ min: 6 })
   ],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    res.send('Passed');
+    // getting posted data
+    const { name, email, password } = req.body;
+
+    try {
+      //Checking if psted email already exist
+      let user = await User.findOne({ email });
+
+      if (user) {
+        res.status(400).json({ msg: 'User with this email already exists' });
+      }
+
+      // Instantiating new User model object with posted data
+      user = new User({ name, email, password });
+
+      // Let's hash the password! :)
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+
+      res.send('User saved!');
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
   }
 );
 
