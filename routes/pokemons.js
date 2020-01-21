@@ -23,9 +23,41 @@ router.get('/', auth, async (req, res) => {
 // @route     POST api/pokemons
 // @desc      Add a pokemon
 // @access    Private
-router.post('/', (req, res) => {
-  res.send('Add a pokemon');
-});
+router.post(
+  '/',
+  [
+    auth,
+    [
+      check('name', 'Name is required')
+        .not()
+        .isEmpty(),
+      check('type', 'Type is required').exists()
+    ]
+  ],
+
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, type } = req.body;
+
+    try {
+      pokemon = new Pokemon({
+        name,
+        type,
+        user: req.user.id
+      });
+
+      await pokemon.save();
+      res.json(pokemon);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 // @route     GET api/pokemons/:id
 // @desc      Show a specific pokemon

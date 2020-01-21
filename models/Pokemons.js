@@ -11,8 +11,7 @@ const PokemonSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   }
 });
 
