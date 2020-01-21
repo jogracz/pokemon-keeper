@@ -1,11 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const Pokemon = require('../models/Pokemons');
+const { check, validationResult } = require('express-validator');
+const User = require('../models/User');
+const auth = require('../middleware/auth');
 
 // @route     GET api/pokemons
 // @desc      Show all pokemons
 // @access    Private
-router.get('/', (req, res) => {
-  res.send('Show all pokemons');
+router.get('/', auth, async (req, res) => {
+  try {
+    const pokemons = await Pokemon.find({ user: req.user.id }).sort({
+      date: -1
+    });
+    res.json(pokemons);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 // @route     POST api/pokemons
