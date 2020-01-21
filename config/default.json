@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://poke123:poke123@pokemonkeeper-hlpd2.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://poke123:poke123@pokemonkeeper-hlpd2.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "pokesecret"
 }
