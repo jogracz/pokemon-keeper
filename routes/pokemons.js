@@ -69,15 +69,55 @@ router.get('/:id', (req, res) => {
 // @route     PUT api/pokemons/{id}
 // @desc      Update specific pokemon
 // @access    Restricted
-router.put('/:id', (req, res) => {
-  res.send('Update specific pokemon');
+router.put('/:id', auth, async (req, res) => {
+  const { name, type } = req.body;
+
+  //Build a contact model
+  const pokeFields = {};
+  if (name) pokeFields.name = name;
+  if (type) pokeFields.type = type;
+
+  try {
+    let pokemon = await Pokemon.findById(req.params.id);
+    if (!pokemon) return res.status(400).json({ msg: 'Pokemon not found' });
+
+    // Make sure user owns this contact
+    if (pokemon.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
+
+    pokemon = await Pokemon.findByIdAndUpdate(
+      req.params.id,
+      { $set: pokeFields },
+      { new: true }
+    );
+    res.json(pokemon);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 // @route     DELETE api/pokemons/:id
 // @desc      Delete specific pokemon
 // @access    Restricted
-router.delete('/:id', (req, res) => {
-  res.send('Delete specific pokemon');
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    let pokemon = await Pokemon.findById(req.params.id);
+    // Make sure contact exists
+    if (!pokemon) return res.status(400).json({ msg: 'Pokemon not found' });
+
+    // Make sure user owns this contact
+    if (pokemon.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
+
+    await Pokemon.findByIdAndRemove(req.params.id);
+    res.json({ msg: 'Pokemon Removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;
