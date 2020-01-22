@@ -27,7 +27,7 @@ Navbar.propTypes = {
 
 Navbar.defaultProps = {
   title: 'Pokemon Keeper',
-  icon: 'fa fa-id-card-alt'
+  icon: 'fa fa-pokemon'
 };
 
 export default Navbar;
