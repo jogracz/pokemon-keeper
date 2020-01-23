@@ -1,17 +1,26 @@
-import React, { Fragments, useContext, Fragment } from 'react';
+import React, { useContext, Fragment } from 'react';
 import PokemonContext from '../../context/pokemon/pokemonContext';
+import PokemonItem from './PokemonItem';
+import Spinner from '../layout/Spinner';
 
 const Pokemons = () => {
-  const pokemonContext = usecontext(PokemonContext);
+  const pokemonContext = useContext(PokemonContext);
 
-  const { pokemons } = pokemonContext;
+  const { myPokemons, allPokemons, foundPokemons, loading } = pokemonContext;
+
+  // if (loading) {
+  //   return <Spinner />;
+  // } else {
   return (
     <Fragment>
-      {pokemons.map(pokemon => (
-        <h3>{pokemon.name}</h3>
-      ))}
+      <div className='row'>
+        {foundPokemons.map(pokemon => (
+          <PokemonItem key={pokemon.id} pokemon={pokemon} />
+        ))}
+      </div>
     </Fragment>
   );
+  // }
 };
 
 export default Pokemons;

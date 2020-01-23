@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PokemonContext from '../../context/pokemon/pokemonContext';
+//import AlertContext from '../../context/alert/alertContext';
+import Search from '../pokemons/Search';
+import Pokemons from '../pokemons/Pokemons';
 
-const Catchem = () => {
-  return (
-    <div>
-      <h1>Catchem All!</h1>
-      <p className='my-1'>Search for Pokemons</p>
-      <p className='bg-dark p'>
-        <strong>Version: 1.0.0</strong>
-      </p>
-    </div>
-  );
-};
-
+const Catchem = () => (
+  <Fragment>
+    <Search />
+    <Pokemons />
+  </Fragment>
+);
 export default Catchem;
