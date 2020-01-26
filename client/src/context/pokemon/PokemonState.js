@@ -41,8 +41,7 @@ const PokemonState = props => {
     allPokemons: [],
     foundPokemons: [],
     pokemon: {},
-    loading: false,
-    loggedIn: false
+    loading: false
   };
 
   const [state, dispatch] = useReducer(PokemonReducer, initialState);
