@@ -24,7 +24,6 @@ const Pokemon = ({ match }) => {
         <p>{species ? species['name'] : ''}</p>
 
         <img src={sprites ? sprites.front_default : ''} className='pokeimg' />
-        {console.log(sprites)}
       </div>
     </Fragment>
   );
