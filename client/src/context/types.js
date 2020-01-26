@@ -1,8 +1,8 @@
 export const GET_ALL_POKEMONS = 'GET_ALL_POKEMONS';
+export const GET_POKEMON = 'GET_POKEMON';
 export const SEARCH_POKEMONS = 'SEARCH_POKEMONS';
 export const GET_MY_POKEMONS = 'GET_MY_POKEMONS';
 export const SET_LOADING = 'SET_LOADING';
-
 export const ADD_POKEMON = 'ADD_POKEMON';
 export const DELETE_POKEMON = 'DELETE_POKEMON';
 export const SET_CURRENT = 'SET_CURRENT';

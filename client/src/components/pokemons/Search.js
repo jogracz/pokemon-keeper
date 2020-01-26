@@ -5,9 +5,9 @@ import PokemonContext from '../../context/pokemon/pokemonContext';
 const Search = () => {
   const pokemonContext = useContext(PokemonContext);
   const { allPokemons, foundPokemons } = pokemonContext;
-  
+
   // if (!allPokemons.length > 0) {
-    pokemonContext.getAllPokemons();
+  pokemonContext.getAllPokemons();
   //}
   //const alertContext = useContext(AlertContext);
 
@@ -18,7 +18,6 @@ const Search = () => {
     if (text === '') {
       //alertContext.setAlert('Please enter something', 'light');
     } else {
-      
       pokemonContext.searchPokemons(text);
       setText('');
     }

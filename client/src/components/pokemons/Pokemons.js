@@ -6,15 +6,27 @@ import Spinner from '../layout/Spinner';
 const Pokemons = () => {
   const pokemonContext = useContext(PokemonContext);
 
-  const { myPokemons, allPokemons, foundPokemons, loading } = pokemonContext;
+  const {
+    myPokemons,
+    allPokemons,
+    foundPokemons,
+    loading,
+    loggedIn
+  } = pokemonContext;
 
+  let pokemons;
+  if (loggedIn) {
+    pokemons = myPokemons;
+  } else {
+    pokemons = foundPokemons;
+  }
   // if (loading) {
   //   return <Spinner />;
   // } else {
   return (
     <Fragment>
       <div className='row'>
-        {foundPokemons.map(pokemon => (
+        {pokemons.map(pokemon => (
           <PokemonItem key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>

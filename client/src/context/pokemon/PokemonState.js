@@ -6,6 +6,7 @@ import PokemonReducer from './pokemonReducer';
 import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
+  GET_POKEMON,
   SET_LOADING,
   GET_MY_POKEMONS,
   ADD_POKEMON,
@@ -39,7 +40,9 @@ const PokemonState = props => {
     ],
     allPokemons: [],
     foundPokemons: [],
-    loading: false
+    pokemon: {},
+    loading: false,
+    loggedIn: false
   };
 
   const [state, dispatch] = useReducer(PokemonReducer, initialState);
@@ -51,6 +54,15 @@ const PokemonState = props => {
     const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
 
     dispatch({ type: GET_ALL_POKEMONS, payload: res.data.results });
+  };
+
+  // Ge A Pokemon
+  const getPokemon = async name => {
+    //setLoading();
+
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+
+    dispatch({ type: GET_POKEMON, payload: res.data });
   };
 
   // Search Pokemons
@@ -65,14 +77,6 @@ const PokemonState = props => {
         matchingP.push(res.data);
       }
     });
-
-    // const pokeArray = [];
-    // let res;
-    // matchingP.forEach(async pokemon => {
-    //   res = await axios.get(pokemon.url);
-    //   pokeArray.push(res.data.name);
-    // });
-
     dispatch({ type: SEARCH_POKEMONS, payload: matchingP });
   };
 
@@ -102,8 +106,11 @@ const PokemonState = props => {
         myPokemons: state.myPokemons,
         allPokemons: state.allPokemons,
         foundPokemons: state.foundPokemons,
+        pokemon: state.pokemon,
         loading: state.loading,
+        loggedIn: state.loggedIn,
         getAllPokemons,
+        getPokemon,
         searchPokemons
       }}
     >

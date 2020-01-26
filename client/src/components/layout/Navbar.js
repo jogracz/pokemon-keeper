@@ -7,11 +7,10 @@ const Navbar = ({ title, icon }) => {
     <Fragment>
       <nav>
         <div className='nav-wrapper bgcolor1'>
-          <div className='brand-logo'>
-            <Link to='/'>
-              <i className={icon} /> {title}
-            </Link>
-          </div>
+          <Link to='/' className='brand-logo hide-on-med-and-down'>
+            <i className={icon} /> {title}
+          </Link>
+
           <ul className='right'>
             <li>
               <Link to='/catchem'>Catch'em</Link>
