@@ -41,7 +41,7 @@ const PokemonState = props => {
     allPokemons: [],
     foundPokemons: [],
     pokemon: {},
-    loading: false
+    loading: true
   };
 
   const [state, dispatch] = useReducer(PokemonReducer, initialState);
@@ -55,7 +55,7 @@ const PokemonState = props => {
     dispatch({ type: GET_ALL_POKEMONS, payload: res.data.results });
   };
 
-  // Ge A Pokemon
+  // Get A Pokemon
   const getPokemon = async name => {
     //setLoading();
 
@@ -97,7 +97,7 @@ const PokemonState = props => {
   //const clearUsers = () => dispatch({ type: CLEAR_POKEMONS });
 
   // Set Loading
-  const setLoading = () => dispatch({ type: SET_LOADING });
+  //const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
     <PokemonContext.Provider

@@ -15,12 +15,12 @@ const Search = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    if (text === '') {
-      //alertContext.setAlert('Please enter something', 'light');
-    } else {
-      pokemonContext.searchPokemons(text);
-      setText('');
-    }
+    //if (text === '') {
+    //alertContext.setAlert('Please enter something', 'light');
+    // } else {
+    pokemonContext.searchPokemons(text);
+    setText('');
+    //}
   };
 
   const onChange = e => setText(e.target.value);
