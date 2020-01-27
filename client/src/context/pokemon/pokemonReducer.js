@@ -2,6 +2,7 @@ import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
   GET_POKEMON,
+  SET_POKEMON,
   GET_MY_POKEMONS,
   SET_LOADING
 } from '../types';
@@ -21,6 +22,12 @@ export default (state, action) => {
         loading: false
       };
     case GET_POKEMON:
+      return {
+        ...state,
+        pokemon: action.payload,
+        loading: false
+      };
+    case SET_POKEMON:
       return {
         ...state,
         pokemon: action.payload,

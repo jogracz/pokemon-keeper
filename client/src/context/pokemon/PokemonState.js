@@ -7,6 +7,7 @@ import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
   GET_POKEMON,
+  SET_POKEMON,
   SET_LOADING,
   GET_MY_POKEMONS,
   ADD_POKEMON,
@@ -64,6 +65,13 @@ const PokemonState = props => {
     dispatch({ type: GET_POKEMON, payload: res.data });
   };
 
+  // Set A Pokemon
+  const setPokemon = pokemon => {
+    //setLoading();
+
+    dispatch({ type: SET_POKEMON, payload: pokemon });
+  };
+
   // Search Pokemons
   const searchPokemons = async text => {
     //setLoading();
@@ -110,6 +118,7 @@ const PokemonState = props => {
         loggedIn: state.loggedIn,
         getAllPokemons,
         getPokemon,
+        setPokemon,
         searchPokemons
       }}
     >
