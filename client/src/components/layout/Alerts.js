@@ -6,7 +6,7 @@ const Alerts = () => {
   return (
     alertContext.alerts.length > 0 &&
     alertContext.alerts.map(alert => (
-      <div key={alert.id} className={`alert alert-${alert.type}`}>
+      <div key={alert.id} className={`col s12 bgcolor4`}>
         {alert.msg}
       </div>
     ))

@@ -25,6 +25,7 @@ export default (state, action) => {
       return {
         ...state,
         pokemon: action.payload,
+        foundPokemons2: [...state.foundPokemons2, action.payload],
         loading: false
       };
     case SET_POKEMON:

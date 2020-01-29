@@ -41,6 +41,7 @@ const PokemonState = props => {
     ],
     allPokemons: [],
     foundPokemons: [],
+    foundPokemons2: [],
     pokemon: {},
     loading: true
   };
@@ -73,8 +74,12 @@ const PokemonState = props => {
   };
 
   // Search Pokemons
-  const searchPokemons = async text => {
-    //setLoading();
+  const searchPokemons = text => {
+    setLoading();
+
+    // const matchingP = state.allPokemons.filter(pokemon =>
+    //   pokemon.name.includes(text)
+    // );
 
     const matchingP = [];
     let res;
@@ -105,7 +110,7 @@ const PokemonState = props => {
   //const clearUsers = () => dispatch({ type: CLEAR_POKEMONS });
 
   // Set Loading
-  //const setLoading = () => dispatch({ type: SET_LOADING });
+  const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
     <PokemonContext.Provider
@@ -113,6 +118,7 @@ const PokemonState = props => {
         myPokemons: state.myPokemons,
         allPokemons: state.allPokemons,
         foundPokemons: state.foundPokemons,
+        foundPokemons2: state.foundPokemons2,
         pokemon: state.pokemon,
         loading: state.loading,
         loggedIn: state.loggedIn,

@@ -1,10 +1,25 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
-const Register = () => {
+const Register = props => {
   const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('./mypanel');
+    }
+    if (error) {
+      setAlert(error, 'danger');
+      console.log(error);
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     name: '',
@@ -24,14 +39,14 @@ const Register = () => {
     } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      // Register
+      register({ name, email, password });
     }
   };
 
   return (
     <div className='form-container'>
       <h1>
-        Account <span className='text-primary'>Register</span>
+        Account <span className='color3'>Register</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
@@ -76,11 +91,7 @@ const Register = () => {
             minLength='6'
           />
         </div>
-        <input
-          type='submit'
-          value='Register'
-          className='btn btn-primary btn-block'
-        />
+        <input type='submit' value='Register' className='btn bgcolor2' />
       </form>
     </div>
   );

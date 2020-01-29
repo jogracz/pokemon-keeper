@@ -1,23 +1,45 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  Component
+} from 'react';
 import PokemonContext from '../../context/pokemon/pokemonContext';
 //import AlertContext from '../../context/alert/alertContext';
 
 const Search = () => {
   const pokemonContext = useContext(PokemonContext);
-  const { allPokemons, foundPokemons } = pokemonContext;
+  const {
+    allPokemons,
+    foundPokemons,
+    getAllPokemons,
+    getPokemon
+  } = pokemonContext;
 
-  // if (!allPokemons.length > 0) {
-  pokemonContext.getAllPokemons();
-  //}
+  // useEffect(() => {
+  //   if (allPokemons.length < 1) {
+  //     pokemonContext.getAllPokemons();
+  //   }
+  //   //   // eslint-disable-next-line
+  // }, []);
   //const alertContext = useContext(AlertContext);
 
   const [text, setText] = useState('');
 
   const onSubmit = e => {
     e.preventDefault();
+    // if (!allPokemons.length > 0) {
+    //   getAllPokemons();
+    // }
     //if (text === '') {
     //alertContext.setAlert('Please enter something', 'light');
     // } else {
+    // allPokemons.map(pok => {
+    //   if (pok.name === text) {
+    //     getPokemon(pok.name);
+    //   }
+    // });
     pokemonContext.searchPokemons(text);
     setText('');
     //}
