@@ -1,11 +1,15 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PokemonContext from '../../context/pokemon/pokemonContext';
+import AuthContext from '../../context/auth/authContext';
 import CaughtPokemon from './CaughtPokemon';
 
 const Pokemon = props => {
   const pokemonContext = useContext(PokemonContext);
-  const { getPokemon, pokemon } = pokemonContext;
+  const authContext = useContext(AuthContext);
+  const { getPokemon, pokemon, addPokemon } = pokemonContext;
+  const { isAuthenticated } = authContext;
+
   const [caught, setCaught] = useState(false);
   // useEffect(() => {
   //   getPokemon(match.params.name);
@@ -24,23 +28,31 @@ const Pokemon = props => {
   //   }
   // }, [props.history, pokemonContext, pokemon]);
 
-  const { name, weight, species, sprites } = pokemon;
+  const { name, weight, species, sprite } = pokemon;
 
   const onClick = () => {
     // Add animation to pokemon image
     const pokeImg = document.querySelector('.pokeimg');
-    pokeImg.classList.add('shake-and-disappear');
-    setTimeout(() => {
-      pokeImg.classList.add('disappear');
-    }, 1400);
+    pokeImg.classList.add('shake');
+    // setTimeout(() => {
+    //   pokeImg.classList.add('disappear');
+    // }, 1400);
 
     // Change button text to 'catching'
     const catchBtn = document.getElementById('catchBtn');
     catchBtn.innerHTML = 'Catching...';
+
+    // Add to db
+    addPokemon(pokemon);
+
     // Change state to display CaughtPokemon component
     setTimeout(() => {
       setCaught(true);
     }, 1400);
+
+    // setTimeout(() => {
+    //   document.getElementById('root').classList.add('rainbowBg');
+    // }, 1400);
 
     //@todo Add pokemon to My Pokemons
   };
@@ -57,18 +69,21 @@ const Pokemon = props => {
             <p>{weight}</p>
           </div>
           <div className='col s6 center-align'>
-            <img
-              src={sprites ? sprites.front_default : ''}
-              className='pokeimg'
-            />
+            <img src={sprite ? sprite : ''} className='pokeimg' />
           </div>
-          <button
-            id='catchBtn'
-            className='col s12 btn bgcolor3'
-            onClick={onClick}
-          >
-            CATCH IT!
-          </button>
+          {isAuthenticated ? (
+            <button
+              id='catchBtn'
+              className='col s12 btn bgcolor3 rainbowBg'
+              onClick={onClick}
+            >
+              CATCH IT!
+            </button>
+          ) : (
+            <h4 className='center-align'>
+              <Link to='/login'>Login </Link> to catch it
+            </h4>
+          )}
         </div>
       </Fragment>
     );

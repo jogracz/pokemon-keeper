@@ -31,7 +31,8 @@ router.post(
       check('name', 'Name is required')
         .not()
         .isEmpty(),
-      check('type', 'Type is required').exists()
+      check('types', 'Types are required').exists(),
+      check('sprite', 'Sprite is required').exists()
     ]
   ],
 
@@ -41,12 +42,13 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, type } = req.body;
+    const { name, types, sprite } = req.body;
 
     try {
       pokemon = new Pokemon({
         name,
-        type,
+        types,
+        sprite,
         user: req.user.id
       });
 
@@ -70,12 +72,13 @@ router.get('/:id', (req, res) => {
 // @desc      Update specific pokemon
 // @access    Restricted
 router.put('/:id', auth, async (req, res) => {
-  const { name, type } = req.body;
+  const { name, types, sprite } = req.body;
 
   //Build a contact model
   const pokeFields = {};
   if (name) pokeFields.name = name;
-  if (type) pokeFields.type = type;
+  if (types) pokeFields.types = types;
+  if (sprite) pokeFields.sprite = sprite;
 
   try {
     let pokemon = await Pokemon.findById(req.params.id);

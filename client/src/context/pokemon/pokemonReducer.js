@@ -4,7 +4,10 @@ import {
   GET_POKEMON,
   SET_POKEMON,
   GET_MY_POKEMONS,
-  SET_LOADING
+  SET_LOADING,
+  CLEAR_FOUND,
+  ADD_POKEMON,
+  POKEMON_ERROR
 } from '../types';
 
 export default (state, action) => {
@@ -18,32 +21,47 @@ export default (state, action) => {
     case GET_ALL_POKEMONS:
       return {
         ...state,
-        allPokemons: action.payload,
-        loading: false
+        allPokemons: action.payload
+        //loading: false
       };
     case GET_POKEMON:
       return {
         ...state,
-        pokemon: action.payload,
         foundPokemons2: [...state.foundPokemons2, action.payload],
-        loading: false
+        loading: true
       };
     case SET_POKEMON:
       return {
         ...state,
-        pokemon: action.payload,
-        loading: false
+        pokemon: action.payload
+        //loading: false
       };
     case GET_MY_POKEMONS:
       return {
         ...state,
-        myPokemons: action.payload,
-        loading: false
+        myPokemons: action.payload
+        //loading: false
       };
     case SET_LOADING:
       return {
         ...state,
         loading: true
+      };
+    case CLEAR_FOUND:
+      return {
+        ...state,
+        foundPokemons2: []
+      };
+    case ADD_POKEMON:
+      return {
+        ...state,
+        myPokemons: [...state.myPokemons, action.payload]
+        //loading: false
+      };
+    case POKEMON_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
     default:
       return state;

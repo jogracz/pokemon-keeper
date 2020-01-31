@@ -48,24 +48,19 @@ const Search = () => {
   const onChange = e => setText(e.target.value);
 
   return (
-    <Fragment>
-      <div>
-        <form onSubmit={onSubmit} className='form row'>
-          <input
-            type='text'
-            name='text'
-            placeholder='Search Pokemons...'
-            value={text}
-            onChange={onChange}
-            className='color5'
-          />
-          <input
-            type='submit'
-            value='Search'
-            className='btn col s12 bgcolor2'
-          />
-        </form>
-        {/* {pokemonContext.allPokemons.length > 0 && (
+    <div>
+      <form onSubmit={onSubmit} className='form row'>
+        <input
+          type='text'
+          name='text'
+          placeholder='Search Pokemons...'
+          value={text}
+          onChange={onChange}
+          className='color5'
+        />
+        <input type='submit' value='Search' className='btn col s12 bgcolor2' />
+      </form>
+      {/* {pokemonContext.allPokemons.length > 0 && (
         <div className='row'>
           <button
             className='btn col s12 bgcolor3'
@@ -75,8 +70,7 @@ const Search = () => {
           </button>
         </div> 
       )}*/}
-      </div>
-    </Fragment>
+    </div>
   );
 };
 

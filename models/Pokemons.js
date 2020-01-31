@@ -9,9 +9,12 @@ const PokemonSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  type: {
-    type: String,
+  types: {
+    type: Array,
     required: true
+  },
+  sprite: {
+    type: String
   }
 });
 

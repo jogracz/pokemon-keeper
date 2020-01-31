@@ -12,13 +12,13 @@ const PokemonItem = ({ pokemon }) => {
   return (
     <Fragment>
       <Link to={`/pokemons/${pokemon.name}`} key={pokemon.id}>
-        <div className='col s4 container'>
-          <div className='card' onClick={onClick}>
-            <div className='card-content center-align'>
-              <h4 className=''>{pokemon.name}</h4>
-              {/* <img src={pokemon.sprites['front_default']} className='pokeimg' /> */}
-            </div>
+        {/* <div className='col s4 container'> */}
+        <div className='card pokeCard rainbowBg' onClick={onClick}>
+          <div className='card-content center-align'>
+            <h4 className=''>{pokemon.name}</h4>
+            <img src={pokemon.sprite} className='pokeimg' />
           </div>
+          {/*    */}
         </div>
       </Link>
     </Fragment>

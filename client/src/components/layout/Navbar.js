@@ -12,6 +12,12 @@ const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, logout, user } = authContext;
 
+  // useEffect(() => {
+  //   loadUser();
+
+  //   // eslint-disable-next-line
+  // }, []);
+
   useEffect(() => {
     if (allPokemons.length < 1) {
       getAllPokemons();
@@ -30,15 +36,20 @@ const Navbar = ({ title, icon }) => {
       <li>Hi {user && user.name}</li>
       <li>
         <a href='#' onClick={onLogout}>
-          <i className='fas sign-out-alt'></i>
-          <span className='hide-sm'>Logout</span>
+          Logout
         </a>
+      </li>
+      <li>
+        <Link to='/mypanel'>My Panel</Link>
       </li>
     </Fragment>
   );
 
   const guestLinks = (
     <Fragment>
+      <li>
+        <Link to='/'>Home</Link>
+      </li>
       <li>
         <Link to='/Register'>Register</Link>
       </li>
@@ -58,9 +69,7 @@ const Navbar = ({ title, icon }) => {
           <li>
             <Link to='/catchem'>Catch'em</Link>
           </li>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
+
           {isAuthenticated ? userLinks : guestLinks}
         </ul>
       </div>

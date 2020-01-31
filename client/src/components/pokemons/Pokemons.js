@@ -4,7 +4,7 @@ import PokemonItem from './PokemonItem';
 import Spinner from '../layout/Spinner';
 import Search from '../pokemons/Search';
 
-const Pokemons = () => {
+const Pokemons = ({ pokemons }) => {
   const pokemonContext = useContext(PokemonContext);
 
   const {
@@ -14,7 +14,7 @@ const Pokemons = () => {
     foundPokemons2,
     getPokemon
   } = pokemonContext;
-  console.log(foundPokemons);
+
   // let pokemons;
   // if (loggedIn) {
   //   pokemons = myPokemons;
@@ -32,7 +32,7 @@ const Pokemons = () => {
     <Fragment>
       {/* <Search /> */}
       <div className='row'>
-        {foundPokemons.map(pokemon => (
+        {pokemons.map(pokemon => (
           <PokemonItem key={pokemon.id} pokemon={pokemon} />
         ))}
       </div>

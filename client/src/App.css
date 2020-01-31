@@ -81,7 +81,6 @@
   }
   50% {
     transform: translate(-1px, 2px) rotate(-1deg);
-    height: 200%;
   }
   60% {
     transform: translate(-3px, 1px) rotate(0deg);
@@ -100,9 +99,20 @@
     /* opacity: 0; */
   }
 }
-.shake-and-disappear {
+.shake {
   animation: shake 0.5s 4;
 }
+/* .pokeCard:hover {
+  /* animation: shake 0.5s 4; */
+/* transform: translate(1px, -2px) rotate(-1deg); */
+/* transform: translate(1px, 2px) rotate(0deg); */
+
+/* transform: translate(-2px, -2px) rotate(2deg); */
+/* transform: translate(3px, 1px) rotate(-1deg); */
+/* transform: translate(-3px, 1px) rotate(0deg); */
+/* transform: translate(-1px, 2px) rotate(-1deg); */
+/* transform: translate(1px, -1px) rotate(1deg); }*/
+
 .disappear {
   display: none;
 }
@@ -110,4 +120,74 @@
 .pokeimg {
   width: 70%;
   position: relative;
+}
+
+.rainbowBg:hover {
+  /* animation: rainbowBg linear 5s infinite; */
+  background: -webkit-linear-gradient(
+    top,
+    /* 0%, #28fcf8 0%, */ /* #ff28fb 32%, */ /* #119daf 50%, */
+      /* 66%, #e63b9f 75%, */ /* #f5ef4e 95% */ var(--light-color) 0%,
+    var(--dark-color) 25%,
+    var(--success-color) 50%,
+    var(--danger-color) 75%,
+    var(--primary-color) 100%
+  );
+  background-size: 1000%;
+  -moz-background-size: 1000%;
+  -webkit-background-size: 1000%;
+
+  /* W3C */
+  animation-name: fun-time-awesome;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+
+  /* Firefox: */
+  -moz-animation-name: fun-time-awesome;
+  -moz-animation-duration: 3s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
+  -moz-animation-play-state: running;
+
+  /* Chrome, Safari */
+  -webkit-animation-name: fun-time-awesome;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-play-state: running;
+}
+
+/* W3C */
+@keyframes fun-time-awesome {
+  0% {
+    background-position: left top;
+  }
+  100% {
+    background-position: right bottom;
+  }
+}
+
+/* Firefox */
+@-moz-keyframes fun-time-awesome {
+  0% {
+    background-position: left top;
+  }
+  100% {
+    background-position: right bottom;
+  }
+}
+
+/* Chrome, Safari */
+@-webkit-keyframes fun-time-awesome {
+  0% {
+    background-position: left top;
+  }
+  100% {
+    background-position: right bottom;
+  }
 }

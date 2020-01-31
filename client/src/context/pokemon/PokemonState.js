@@ -9,41 +9,24 @@ import {
   GET_POKEMON,
   SET_POKEMON,
   SET_LOADING,
+  CLEAR_FOUND,
+  POKEMON_ERROR,
   GET_MY_POKEMONS,
   ADD_POKEMON,
   DELETE_POKEMON,
   SET_CURRENT,
-  CLEAR_CURRENT,
-  UPDATE_POKEMON,
-  FILTER_POKEMONS,
-  CLEAR_FILTER
+  CLEAR_CURRENT
 } from '../types';
 
 const PokemonState = props => {
   const initialState = {
-    myPokemons: [
-      {
-        id: 1,
-        name: 'Vulpix',
-        type: 'personel'
-      },
-
-      {
-        id: 2,
-        name: 'Bulbazaur',
-        type: 'professional'
-      },
-      {
-        id: 3,
-        name: 'Charmander',
-        type: 'personal'
-      }
-    ],
+    myPokemons: [],
     allPokemons: [],
     foundPokemons: [],
     foundPokemons2: [],
     pokemon: {},
-    loading: true
+    error: null,
+    loading: false
   };
 
   const [state, dispatch] = useReducer(PokemonReducer, initialState);
@@ -62,8 +45,13 @@ const PokemonState = props => {
     //setLoading();
 
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const pokemon = {};
+    pokemon.id = res.data.id;
+    pokemon.name = res.data.name;
+    pokemon.types = res.data.types;
+    pokemon.sprite = res.data.sprites['front_default'];
 
-    dispatch({ type: GET_POKEMON, payload: res.data });
+    dispatch({ type: GET_POKEMON, payload: pokemon });
   };
 
   // Set A Pokemon
@@ -77,22 +65,44 @@ const PokemonState = props => {
   const searchPokemons = text => {
     setLoading();
 
-    // const matchingP = state.allPokemons.filter(pokemon =>
-    //   pokemon.name.includes(text)
-    // );
+    //Clear FoundPokemoms
+    clearFound();
 
-    const matchingP = [];
-    let res;
-    state.allPokemons.forEach(async pokemon => {
-      if (pokemon.name.includes(text)) {
-        res = await axios.get(pokemon.url);
-        matchingP.push(res.data);
-      }
-    });
+    const matchingP = state.allPokemons.filter(pokemon =>
+      pokemon.name.includes(text)
+    );
+    matchingP.map(pokemon => getPokemon(pokemon.name));
+
+    // const matchingP = [];
+    // let res;
+    // state.allPokemons.forEach(async pokemon => {
+    //   if (pokemon.name.includes(text)) {
+    //     res = await axios.get(pokemon.url);
+    //     matchingP.push(res.data);
+    //   }
+    //});
     dispatch({ type: SEARCH_POKEMONS, payload: matchingP });
   };
 
+  // Clear FoundPokemons
+  const clearFound = () => {
+    dispatch({ type: CLEAR_FOUND });
+  };
+
   // Add Pokemon
+  const addPokemon = async pokemon => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const res = await axios.post('/api/pokemons', pokemon, config);
+      dispatch({ type: ADD_POKEMON, payload: res.data });
+    } catch (error) {
+      dispatch({ type: POKEMON_ERROR, payload: error });
+    }
+  };
 
   // Delete Pokemon
 
@@ -121,11 +131,13 @@ const PokemonState = props => {
         foundPokemons2: state.foundPokemons2,
         pokemon: state.pokemon,
         loading: state.loading,
-        loggedIn: state.loggedIn,
+        error: state.error,
         getAllPokemons,
         getPokemon,
         setPokemon,
-        searchPokemons
+        searchPokemons,
+        clearFound,
+        addPokemon
       }}
     >
       {props.children}
