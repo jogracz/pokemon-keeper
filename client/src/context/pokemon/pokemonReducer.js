@@ -61,6 +61,11 @@ export default (state, action) => {
     case POKEMON_ERROR:
       return {
         ...state,
+        myPokemons: action.payload
+      };
+    case POKEMON_ERROR:
+      return {
+        ...state,
         error: action.payload
       };
     default:

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import PokemonContext from '../../context/pokemon/pokemonContext';
 import PokemonItem from '../pokemons/PokemonItem';
@@ -7,8 +7,11 @@ const MyPanel = () => {
   const authContext = useContext(AuthContext);
   const pokemonContext = useContext(PokemonContext);
   const { user } = authContext;
-  const { myPokemons } = pokemonContext;
+  const { myPokemons, getMyPokemons } = pokemonContext;
 
+  useEffect(() => {
+    getMyPokemons();
+  }, []);
   return (
     <div className='row'>
       <h4 className='divider'>User {user && user.name}!</h4>

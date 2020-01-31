@@ -104,6 +104,15 @@ const PokemonState = props => {
     }
   };
 
+  // Get My Pokemons
+  const getMyPokemons = async () => {
+    try {
+      const res = await axios.get('/api/pokemons');
+      dispatch({ type: GET_MY_POKEMONS, payload: res.data });
+    } catch (error) {
+      dispatch({ type: POKEMON_ERROR, payload: error });
+    }
+  };
   // Delete Pokemon
 
   // Set Current Pokemon
@@ -137,7 +146,8 @@ const PokemonState = props => {
         setPokemon,
         searchPokemons,
         clearFound,
-        addPokemon
+        addPokemon,
+        getMyPokemons
       }}
     >
       {props.children}
