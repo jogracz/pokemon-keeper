@@ -7,7 +7,9 @@ import {
   SET_LOADING,
   CLEAR_FOUND,
   ADD_POKEMON,
-  POKEMON_ERROR
+  POKEMON_ERROR,
+  DELETE_POKEMON,
+  CLEAR_CURRENT
 } from '../types';
 
 export default (state, action) => {
@@ -33,7 +35,13 @@ export default (state, action) => {
     case SET_POKEMON:
       return {
         ...state,
-        pokemon: action.payload
+        currentPokemon: action.payload
+        //loading: false
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        currentPokemon: null
         //loading: false
       };
     case GET_MY_POKEMONS:
@@ -41,6 +49,13 @@ export default (state, action) => {
         ...state,
         myPokemons: action.payload
         //loading: false
+      };
+    case DELETE_POKEMON:
+      return {
+        ...state,
+        myPokemons: state.myPokemons.filter(
+          pokemon => pokemon._id !== action.payload
+        )
       };
     case SET_LOADING:
       return {
@@ -55,13 +70,8 @@ export default (state, action) => {
     case ADD_POKEMON:
       return {
         ...state,
-        myPokemons: [...state.myPokemons, action.payload]
+        myPokemons: [action.payload, ...state.myPokemons]
         //loading: false
-      };
-    case POKEMON_ERROR:
-      return {
-        ...state,
-        myPokemons: action.payload
       };
     case POKEMON_ERROR:
       return {

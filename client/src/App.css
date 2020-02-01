@@ -123,6 +123,7 @@
 }
 
 .rainbowBg:hover {
+  color: white;
   /* animation: rainbowBg linear 5s infinite; */
   background: -webkit-linear-gradient(
     top,

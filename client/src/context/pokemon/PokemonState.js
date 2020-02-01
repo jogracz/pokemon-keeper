@@ -24,7 +24,7 @@ const PokemonState = props => {
     allPokemons: [],
     foundPokemons: [],
     foundPokemons2: [],
-    pokemon: {},
+    currentPokemon: {},
     error: null,
     loading: false
   };
@@ -59,6 +59,10 @@ const PokemonState = props => {
     //setLoading();
 
     dispatch({ type: SET_POKEMON, payload: pokemon });
+  };
+
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
   };
 
   // Search Pokemons
@@ -114,6 +118,14 @@ const PokemonState = props => {
     }
   };
   // Delete Pokemon
+  const deletePokemon = async id => {
+    try {
+      await axios.delete(`/api/pokemons/${id}`);
+      dispatch({ type: DELETE_POKEMON, payload: id });
+    } catch (error) {
+      dispatch({ type: POKEMON_ERROR, payload: error });
+    }
+  };
 
   // Set Current Pokemon
 
@@ -138,7 +150,7 @@ const PokemonState = props => {
         allPokemons: state.allPokemons,
         foundPokemons: state.foundPokemons,
         foundPokemons2: state.foundPokemons2,
-        pokemon: state.pokemon,
+        currentPokemon: state.currentPokemon,
         loading: state.loading,
         error: state.error,
         getAllPokemons,
@@ -147,7 +159,9 @@ const PokemonState = props => {
         searchPokemons,
         clearFound,
         addPokemon,
-        getMyPokemons
+        getMyPokemons,
+        deletePokemon,
+        clearCurrent
       }}
     >
       {props.children}

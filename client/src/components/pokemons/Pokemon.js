@@ -3,32 +3,31 @@ import { Link } from 'react-router-dom';
 import PokemonContext from '../../context/pokemon/pokemonContext';
 import AuthContext from '../../context/auth/authContext';
 import CaughtPokemon from './CaughtPokemon';
+import { DELETE_POKEMON } from '../../context/types';
 
 const Pokemon = props => {
   const pokemonContext = useContext(PokemonContext);
   const authContext = useContext(AuthContext);
-  const { getPokemon, pokemon, addPokemon } = pokemonContext;
+  const {
+    currentPokemon,
+    addPokemon,
+    myPokemons,
+    deletePokemon,
+    clearCurrent,
+    getMyPokemons
+  } = pokemonContext;
   const { isAuthenticated } = authContext;
 
   const [caught, setCaught] = useState(false);
-  // useEffect(() => {
-  //   getPokemon(match.params.name);
-  //   // eslint-disable-next-line
-  // }, [pokemonContext, pokemon]);
+
   useEffect(() => {
-    if (pokemon === {}) {
+    if (currentPokemon === {}) {
       props.history.push('/catchem');
     }
     // eslint-disable-next-line
-  }, [pokemon, props.history]);
+  }, []);
 
-  // useEffect(() => {
-  //   if (pokemon) {
-  //     props.history.push('/catchem');
-  //   }
-  // }, [props.history, pokemonContext, pokemon]);
-
-  const { name, weight, species, sprite } = pokemon;
+  const { name, weight, species, sprite, _id } = currentPokemon;
 
   const onClick = () => {
     // Add animation to pokemon image
@@ -43,18 +42,17 @@ const Pokemon = props => {
     catchBtn.innerHTML = 'Catching...';
 
     // Add to db
-    addPokemon(pokemon);
+    addPokemon(currentPokemon);
 
     // Change state to display CaughtPokemon component
     setTimeout(() => {
       setCaught(true);
     }, 1400);
+  };
 
-    // setTimeout(() => {
-    //   document.getElementById('root').classList.add('rainbowBg');
-    // }, 1400);
-
-    //@todo Add pokemon to My Pokemons
+  const onDelete = () => {
+    deletePokemon(_id);
+    props.history.push('/myPanel');
   };
 
   if (!caught) {
@@ -71,7 +69,11 @@ const Pokemon = props => {
           <div className='col s6 center-align'>
             <img src={sprite ? sprite : ''} className='pokeimg' />
           </div>
-          {isAuthenticated ? (
+          {isAuthenticated && myPokemons.includes(currentPokemon) ? (
+            <button className='btn bgcolor4 align-center' onClick={onDelete}>
+              Delete
+            </button>
+          ) : isAuthenticated ? (
             <button
               id='catchBtn'
               className='col s12 btn bgcolor3 rainbowBg'
@@ -84,11 +86,12 @@ const Pokemon = props => {
               <Link to='/login'>Login </Link> to catch it
             </h4>
           )}
+          {myPokemons.includes(currentPokemon) && <h3>My pokemon</h3>}
         </div>
       </Fragment>
     );
   } else {
-    return <CaughtPokemon name={pokemon.name} />;
+    return <CaughtPokemon name={currentPokemon.name} />;
   }
 };
 

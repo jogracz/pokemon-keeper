@@ -33,14 +33,13 @@ const Navbar = ({ title, icon }) => {
   const userLinks = (
     <Fragment>
       {/* My panel */}
-      <li>Hi {user && user.name}</li>
+      <li>
+        <Link to='/mypanel'>My Panel</Link>
+      </li>
       <li>
         <a href='#' onClick={onLogout}>
           Logout
         </a>
-      </li>
-      <li>
-        <Link to='/mypanel'>My Panel</Link>
       </li>
     </Fragment>
   );
