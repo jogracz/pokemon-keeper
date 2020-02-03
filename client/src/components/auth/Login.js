@@ -7,11 +7,11 @@ const Login = props => {
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { login, register, error, clearErrors, isAuthenticated } = authContext;
+  const { login, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push('./mypanel');
+      props.history.push('./mypokeball');
     }
     if (error) {
       setAlert(error, 'danger');
@@ -43,35 +43,33 @@ const Login = props => {
   };
 
   return (
-    <div className='form-container'>
-      <h1>
-        Account <span className='text-primary'>Login</span>
-      </h1>
+    <div className='row container'>
+      <h2>
+        Account <span className='color2'>Login</span>
+      </h2>
       <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <label htmlFor='email'>Email Adress</label>
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            required
-          />
-        </div>
+        <label htmlFor='email'>Email Adress</label>
+        <input
+          type='email'
+          name='email'
+          value={email}
+          onChange={onChange}
+          required
+          className=''
+        />
+        <label htmlFor='password'>Password</label>
+        <input
+          type='password'
+          name='password'
+          value={password}
+          onChange={onChange}
+          required
+        />
         <input
           type='submit'
           value='Login'
-          className='btn btn-primary btn-block'
+          className='btn bgcolor2 col s12 rainbowBg'
+          style={{ marginTop: '20px' }}
         />
       </form>
     </div>

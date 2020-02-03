@@ -2,8 +2,9 @@ import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
   GET_POKEMON,
-  SET_POKEMON,
+  SET_CURRENT,
   GET_MY_POKEMONS,
+  CLEAR_MY_POKEMONS,
   SET_LOADING,
   CLEAR_FOUND,
   ADD_POKEMON,
@@ -17,7 +18,7 @@ export default (state, action) => {
     case SEARCH_POKEMONS:
       return {
         ...state,
-        foundPokemons: action.payload,
+        matchingNames: action.payload,
         loading: false
       };
     case GET_ALL_POKEMONS:
@@ -29,10 +30,10 @@ export default (state, action) => {
     case GET_POKEMON:
       return {
         ...state,
-        foundPokemons2: [...state.foundPokemons2, action.payload],
+        foundPokemons: [...state.foundPokemons, action.payload],
         loading: true
       };
-    case SET_POKEMON:
+    case SET_CURRENT:
       return {
         ...state,
         currentPokemon: action.payload
@@ -48,7 +49,11 @@ export default (state, action) => {
       return {
         ...state,
         myPokemons: action.payload
-        //loading: false
+      };
+    case CLEAR_MY_POKEMONS:
+      return {
+        ...state,
+        myPokemons: null
       };
     case DELETE_POKEMON:
       return {
@@ -65,12 +70,12 @@ export default (state, action) => {
     case CLEAR_FOUND:
       return {
         ...state,
-        foundPokemons2: []
+        foundPokemons: []
       };
     case ADD_POKEMON:
       return {
         ...state,
-        myPokemons: [action.payload, ...state.myPokemons]
+        myPokemons: [...state.myPokemons, action.payload]
         //loading: false
       };
     case POKEMON_ERROR:

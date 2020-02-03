@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useContext,
-  useEffect,
-  Component
-} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PokemonContext from '../../context/pokemon/pokemonContext';
 //import AlertContext from '../../context/alert/alertContext';
 
@@ -14,62 +8,40 @@ const Search = () => {
     allPokemons,
     foundPokemons,
     getAllPokemons,
-    getPokemon
+    getPokemon,
+    searchPokemons
   } = pokemonContext;
-
-  // useEffect(() => {
-  //   if (allPokemons.length < 1) {
-  //     pokemonContext.getAllPokemons();
-  //   }
-  //   //   // eslint-disable-next-line
-  // }, []);
-  //const alertContext = useContext(AlertContext);
 
   const [text, setText] = useState('');
 
   const onSubmit = e => {
     e.preventDefault();
-    // if (!allPokemons.length > 0) {
-    //   getAllPokemons();
-    // }
-    //if (text === '') {
-    //alertContext.setAlert('Please enter something', 'light');
-    // } else {
-    // allPokemons.map(pok => {
-    //   if (pok.name === text) {
-    //     getPokemon(pok.name);
-    //   }
-    // });
-    pokemonContext.searchPokemons(text);
-    setText('');
-    //}
+
+    if (text !== '') {
+      searchPokemons(text);
+      setText('');
+    }
   };
 
   const onChange = e => setText(e.target.value);
 
   return (
-    <div>
+    <div style={{ marginTop: '20px' }}>
       <form onSubmit={onSubmit} className='form row'>
         <input
           type='text'
           name='text'
-          placeholder='Search Pokemons...'
+          placeholder='Type a letter or few...'
           value={text}
           onChange={onChange}
-          className='color5'
+          className=''
         />
-        <input type='submit' value='Search' className='btn col s12 bgcolor2' />
+        <input
+          type='submit'
+          value='Search'
+          className='btn col s12 bgcolor3 rainbowBg'
+        />
       </form>
-      {/* {pokemonContext.allPokemons.length > 0 && (
-        <div className='row'>
-          <button
-            className='btn col s12 bgcolor3'
-            // onClick={githubContext.clearUsers}
-          >
-            Clear
-          </button>
-        </div> 
-      )}*/}
     </div>
   );
 };

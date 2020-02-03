@@ -1,44 +1,42 @@
 import React, { useContext, useEffect, Fragment } from 'react';
-import Pokemons from '../pokemons/Pokemons';
-import PokemonContext from '../../context/pokemon/pokemonContext';
 import AuthContext from '../../context/auth/authContext';
 import { Link } from 'react-router-dom';
 
 const Home = props => {
-  const pokemonContext = useContext(PokemonContext);
   const authContext = useContext(AuthContext);
-  const { allPokemons, getAllPokemons } = pokemonContext;
-  const { user, loadUser, isAuthenticated } = authContext;
+  const { loadUser, isAuthenticated } = authContext;
 
   useEffect(() => {
-    loadUser();
+    // loadUser();
     if (isAuthenticated) {
-      props.history.push('./mypanel');
+      props.history.push('./myPokeball');
     }
     // eslint-disable-next-line
-  }, [isAuthenticated, props.history]);
+  }, [isAuthenticated]);
 
   return (
     <Fragment>
-      <div className='row valign-wrapper'>
-        <div className='col s6 offset-s1'>
+      <div className='row ' style={{ marginTop: '20px' }}>
+        <div className='col s12 m6 l6 xl6' style={{ marginBottom: '20px' }}>
           <h5>This is a </h5>
           <h4>Pokemon Keeper App</h4>
           <h6>You can catch pokemons and keep them saved in your account</h6>
           <h5>How cool is that?</h5>
         </div>
-        <div className='col s4 offset-s1'>
+        <div className='col s12 m5 l5 xl4' style={{ marginLeft: '30px' }}>
           <p className='col s10'>New here?</p>
           <Link to='/register'>
-            <button className='btn bgcolor2 col s10'>Register</button>
+            <button className='btn bgcolor1 col s10 rainbowBg'>Register</button>
           </Link>
           <p className='col s10'>Already registered?</p>
           <Link to='/login'>
-            <button className='btn bgcolor3 col s10'>Login</button>
+            <button className='btn bgcolor2 col s10 rainbowBg'>Login</button>
           </Link>
-          <p className='col s10'>Need some inspiration?</p>
+          <p className='col s10'>Need inspiration?</p>
           <Link to='/catchem'>
-            <button className='btn bgcolor1 col s10'>Browse Pokemons</button>
+            <button className='btn bgcolor3 col s10 rainbowBg'>
+              Browse Pokemons
+            </button>
           </Link>
         </div>
       </div>

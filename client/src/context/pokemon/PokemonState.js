@@ -7,11 +7,11 @@ import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
   GET_POKEMON,
-  SET_POKEMON,
   SET_LOADING,
   CLEAR_FOUND,
   POKEMON_ERROR,
   GET_MY_POKEMONS,
+  CLEAR_MY_POKEMONS,
   ADD_POKEMON,
   DELETE_POKEMON,
   SET_CURRENT,
@@ -20,10 +20,10 @@ import {
 
 const PokemonState = props => {
   const initialState = {
-    myPokemons: [],
+    myPokemons: null,
     allPokemons: [],
+    matchingNames: [],
     foundPokemons: [],
-    foundPokemons2: [],
     currentPokemon: {},
     error: null,
     loading: false
@@ -31,10 +31,8 @@ const PokemonState = props => {
 
   const [state, dispatch] = useReducer(PokemonReducer, initialState);
 
-  // Ge All 152 Pokemons
+  // Ge All First Generation Pokemons
   const getAllPokemons = async () => {
-    //setLoading();
-
     const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
 
     dispatch({ type: GET_ALL_POKEMONS, payload: res.data.results });
@@ -45,20 +43,30 @@ const PokemonState = props => {
     //setLoading();
 
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-    const pokemon = {};
+    const pokemon = {
+      id: null,
+      name: '',
+      weight: '',
+      height: '',
+      base_experience: '',
+      types: [],
+      sprites: {}
+    };
     pokemon.id = res.data.id;
     pokemon.name = res.data.name;
+    pokemon.weight = res.data.weight;
+    pokemon.height = res.data.height;
+    pokemon.base_experience = res.data.base_experience;
     pokemon.types = res.data.types;
-    pokemon.sprite = res.data.sprites['front_default'];
+    pokemon.sprites.front = res.data.sprites.front_default;
+    pokemon.sprites.back = res.data.sprites.back_default;
 
     dispatch({ type: GET_POKEMON, payload: pokemon });
   };
 
-  // Set A Pokemon
-  const setPokemon = pokemon => {
-    //setLoading();
-
-    dispatch({ type: SET_POKEMON, payload: pokemon });
+  // Set Current Pokemon
+  const setCurrent = pokemon => {
+    dispatch({ type: SET_CURRENT, payload: pokemon });
   };
 
   const clearCurrent = () => {
@@ -72,20 +80,12 @@ const PokemonState = props => {
     //Clear FoundPokemoms
     clearFound();
 
-    const matchingP = state.allPokemons.filter(pokemon =>
+    const matchingNames = state.allPokemons.filter(pokemon =>
       pokemon.name.includes(text)
     );
-    matchingP.map(pokemon => getPokemon(pokemon.name));
+    matchingNames.map(pokemon => getPokemon(pokemon.name));
 
-    // const matchingP = [];
-    // let res;
-    // state.allPokemons.forEach(async pokemon => {
-    //   if (pokemon.name.includes(text)) {
-    //     res = await axios.get(pokemon.url);
-    //     matchingP.push(res.data);
-    //   }
-    //});
-    dispatch({ type: SEARCH_POKEMONS, payload: matchingP });
+    dispatch({ type: SEARCH_POKEMONS, payload: matchingNames });
   };
 
   // Clear FoundPokemons
@@ -117,6 +117,12 @@ const PokemonState = props => {
       dispatch({ type: POKEMON_ERROR, payload: error });
     }
   };
+
+  // Clear My Pokemons
+  const clearMyPokemons = () => {
+    dispatch({ type: CLEAR_MY_POKEMONS });
+  };
+
   // Delete Pokemon
   const deletePokemon = async id => {
     try {
@@ -127,18 +133,9 @@ const PokemonState = props => {
     }
   };
 
-  // Set Current Pokemon
-
   // Clear Current Pokemon
 
-  // Update Pokemon
-
-  // Filter Pokemons
-
   // Clear Filter
-
-  // Clear Pokemons
-  //const clearUsers = () => dispatch({ type: CLEAR_POKEMONS });
 
   // Set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
@@ -148,18 +145,19 @@ const PokemonState = props => {
       value={{
         myPokemons: state.myPokemons,
         allPokemons: state.allPokemons,
+        matchingNames: state.matchingNames,
         foundPokemons: state.foundPokemons,
-        foundPokemons2: state.foundPokemons2,
         currentPokemon: state.currentPokemon,
         loading: state.loading,
         error: state.error,
         getAllPokemons,
         getPokemon,
-        setPokemon,
+        setCurrent,
         searchPokemons,
         clearFound,
         addPokemon,
         getMyPokemons,
+        clearMyPokemons,
         deletePokemon,
         clearCurrent
       }}

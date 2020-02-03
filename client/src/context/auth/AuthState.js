@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
-import setAuthToken from '../../utils/setAuthToken';
+//import setAuthToken from '../../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -24,6 +24,14 @@ const AuthState = props => {
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
+
+  const setAuthToken = token => {
+    if (token) {
+      axios.defaults.headers.common['x-auth-token'] = token;
+    } else {
+      delete axios.defaults.headers.common['x-auth-token'];
+    }
+  };
 
   // Load User
   const loadUser = async () => {
@@ -73,10 +81,13 @@ const AuthState = props => {
       dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
     }
   };
+
   // Logout
   const logout = () => {
+    setAuthToken(false);
     dispatch({ type: LOGOUT });
   };
+
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 

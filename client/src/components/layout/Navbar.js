@@ -1,32 +1,29 @@
 import React, { Fragment, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import PokemonContext from '../../context/pokemon/pokemonContext';
 import AuthContext from '../../context/auth/authContext';
 
-const Navbar = ({ title, icon }) => {
+const Navbar = () => {
   const pokemonContext = useContext(PokemonContext);
-  const { allPokemons, getAllPokemons } = pokemonContext;
+  const { allPokemons, getAllPokemons, clearMyPokemons } = pokemonContext;
 
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, logout, user } = authContext;
-
-  // useEffect(() => {
-  //   loadUser();
-
-  //   // eslint-disable-next-line
-  // }, []);
+  const { isAuthenticated, logout, loadUser } = authContext;
 
   useEffect(() => {
     if (allPokemons.length < 1) {
+      loadUser();
       getAllPokemons();
     }
     // eslint-disable-next-line
   }, []);
 
-  const onLogout = () => {
+  const onLogout = e => {
+    e.preventDefault();
     logout();
+    clearMyPokemons();
+    //Redirect to home
     // clear My Pokemons
   };
 
@@ -34,7 +31,7 @@ const Navbar = ({ title, icon }) => {
     <Fragment>
       {/* My panel */}
       <li>
-        <Link to='/mypanel'>My Panel</Link>
+        <Link to='/myPokeball'>My Pokeball</Link>
       </li>
       <li>
         <a href='#' onClick={onLogout}>
@@ -62,7 +59,7 @@ const Navbar = ({ title, icon }) => {
     <nav>
       <div className='nav-wrapper bgcolor1'>
         <Link to='/' className='brand-logo hide-on-med-and-down'>
-          <i className={icon} /> {title}
+          Pokemon Keeper
         </Link>
         <ul className='right'>
           <li>
@@ -74,16 +71,6 @@ const Navbar = ({ title, icon }) => {
       </div>
     </nav>
   );
-};
-
-Navbar.propTypes = {
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.string
-};
-
-Navbar.defaultProps = {
-  title: 'Pokemon Keeper',
-  icon: 'fa fa-pokemon'
 };
 
 export default Navbar;

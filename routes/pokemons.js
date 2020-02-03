@@ -26,14 +26,14 @@ router.get('/', auth, async (req, res) => {
 router.post(
   '/',
   [
-    auth,
-    [
-      check('name', 'Name is required')
-        .not()
-        .isEmpty(),
-      check('types', 'Types are required').exists(),
-      check('sprite', 'Sprite is required').exists()
-    ]
+    auth
+    // [
+    //   check('name', 'Name is required')
+    //     .not()
+    //     .isEmpty(),
+    //   check('types', 'Types are required').exists(),
+    //   check('sprite', 'Sprite is required').exists()
+    // ]
   ],
 
   async (req, res) => {
@@ -42,13 +42,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, types, sprite } = req.body;
+    const { name, types, sprites, weight, height, base_experience } = req.body;
 
     try {
       pokemon = new Pokemon({
         name,
         types,
-        sprite,
+        sprites,
+        weight,
+        height,
+        base_experience,
         user: req.user.id
       });
 

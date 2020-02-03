@@ -7,7 +7,7 @@ import Pokemon from './components/pokemons/Pokemon';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alerts from './components/layout/Alerts';
-import MyPanel from './components/pages/MyPanel';
+import MyPokeball from './components/pages/MyPokeball';
 import PrivateRoute from './components/routing/PrivateRoute';
 
 import PokemonState from './context/pokemon/PokemonState';
@@ -33,9 +33,13 @@ const App = () => {
                 <Alerts />
                 <Switch>
                   <Route exact path='/' component={Home} />
-                  <PrivateRoute exact path='/mypanel' component={MyPanel} />
+                  <PrivateRoute
+                    exact
+                    path='/myPokeball'
+                    component={MyPokeball}
+                  />
                   <Route exact path='/catchem' component={Catchem} />
-                  <Route exact path='/pokemons/:name' component={Pokemon} />
+                  <Route exact path='/pokemon' component={Pokemon} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
                 </Switch>

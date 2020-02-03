@@ -13,7 +13,16 @@ const PokemonSchema = mongoose.Schema({
     type: Array,
     required: true
   },
-  sprite: {
+  sprites: {
+    type: Object
+  },
+  weight: {
+    type: String
+  },
+  height: {
+    type: String
+  },
+  base_experience: {
     type: String
   }
 });
