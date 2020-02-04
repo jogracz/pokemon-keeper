@@ -7,23 +7,15 @@ import CaughtPokemon from './CaughtPokemon';
 const Pokemon = props => {
   const pokemonContext = useContext(PokemonContext);
   const authContext = useContext(AuthContext);
+
   const {
     currentPokemon,
     addPokemon,
     myPokemons,
-    deletePokemon,
-    clearCurrent
+    deletePokemon
   } = pokemonContext;
 
   const { isAuthenticated } = authContext;
-
-  const [caught, setCaught] = useState(false);
-
-  useEffect(() => {
-    if (!currentPokemon.name) {
-      props.history.push('/catchem');
-    }
-  }, []);
 
   const {
     name,
@@ -34,6 +26,19 @@ const Pokemon = props => {
     _id,
     types
   } = currentPokemon;
+
+  const [caught, setCaught] = useState(false);
+  const [prevPage, setPrevPage] = useState('/catchem');
+
+  useEffect(() => {
+    if (!currentPokemon.name) {
+      props.history.push('/catchem');
+    }
+    if (myPokemons && myPokemons.includes(currentPokemon)) {
+      setPrevPage('/mypokeball');
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const badges = {
     electric: 'new badge yellow black-text',
@@ -54,6 +59,7 @@ const Pokemon = props => {
     normal: 'new badge grey'
   };
 
+  // Catch Pokemon
   const onClick = () => {
     // Add animation to pokemon image
     const pokeImg = document.querySelector('.pokeimg');
@@ -72,6 +78,7 @@ const Pokemon = props => {
     }, 1400);
   };
 
+  // Delete Pokemon
   const onDelete = () => {
     const pokeImg = document.querySelector('.pokeimg');
     // Change picture to back
@@ -83,7 +90,7 @@ const Pokemon = props => {
     // Add animation
     setTimeout(() => {
       pokeImg.classList.add('byebye');
-    }, 500);
+    }, 800);
 
     // Go back to My Pokeball
     setTimeout(() => {
@@ -94,84 +101,84 @@ const Pokemon = props => {
   if (!caught) {
     return (
       <Fragment>
-        {/* Back to previous page links */}
-        {myPokemons && myPokemons.includes(currentPokemon) ? (
-          <Link to='/myPokeball'>
-            <h6 className='color1'>
-              <i className='fa fa-arrow-left size-9x'></i> back to My Pokeball
-            </h6>
-          </Link>
-        ) : (
-          <Link to='/catchem'>
-            <h6 className='color2'>
-              <i className='fa fa-arrow-left'></i> back to search
-            </h6>
-          </Link>
-        )}
-
-        <div id='toCatch' className='container row' style={{}}>
-          {/* Pokemon's name on top */}
-          <div className='col s12'>
-            <h2 className='center-align'>{name}</h2>
-          </div>
-          {/* Properties and picture div */}
-          <div className='col s12' style={{ marginBottom: '50px' }}>
-            {/* Pokemon's properties on the left*/}
-            <div className='col s12 m6'>
-              {/* Types */}
-              <h5>
-                Types
-                {types &&
-                  types.map(type => (
-                    <span
-                      key={type.type.name}
-                      className={badges[type.type.name]}
-                      data-badge-caption=''
-                    >
-                      {type.type.name}
-                    </span>
-                  ))}
-              </h5>
-              <h5>Base Experience: {base_experience}</h5>
-              <h5>Weight: {weight}</h5>
-              <h5>Height: {height}</h5>
-            </div>
-
-            {/* Pokemon img on the right */}
-            <div
-              className='col s12 m6 center-align'
-              style={{ height: '200px' }}
-            >
-              <img src={sprites ? sprites.front : ''} className='pokeimg' />
-            </div>
-          </div>
-
-          {/* Buttons on the bottom*/}
-
-          {isAuthenticated &&
-          myPokemons &&
-          myPokemons.includes(currentPokemon) ? (
-            // if logged in and it's your pokemon: set it free
-            <button className='btn bgcolor4 col s12' onClick={onDelete}>
-              Set it free...
-            </button>
-          ) : isAuthenticated ? (
-            // if logged in but it's not your pokemon: catch it
-            <button
-              id='catchBtn'
-              className='col s12 btn bgcolor3 rainbowBg'
-              onClick={onClick}
-            >
-              CATCH IT!
-            </button>
-          ) : (
-            // if not logged in: log in
-            <Link to='/login'>
-              <button className='col s12 btn bgcolor2 rainbowBg'>
-                Login to catch it
-              </button>
+        <div className='row'>
+          {/* Back to previous page links */}
+          <div className='col s12 l2'>
+            <Link to={prevPage}>
+              <h2 className='color5'>
+                <i className='fa fa-arrow-circle-left'></i>
+              </h2>
             </Link>
-          )}
+          </div>
+
+          <div id='toCatch' className='col s12 l8' style={{}}>
+            {/* Pokemon's name on top */}
+            <div className='col s12'>
+              <h2 className='center-align'>{name}</h2>
+            </div>
+            {/* Properties and picture div */}
+            <div className='col s12' style={{ marginBottom: '50px' }}>
+              {/* Pokemon's properties on the left*/}
+              <div className='col s12 m6'>
+                {/* Types */}
+                <h5>
+                  {types && types.length > 1 ? 'Types' : 'Type'}
+                  {types &&
+                    types.map(type => (
+                      <span
+                        key={type.type.name}
+                        className={badges[type.type.name]}
+                        data-badge-caption=''
+                      >
+                        {type.type.name}
+                      </span>
+                    ))}
+                </h5>
+                <h5>Base Experience: {base_experience}</h5>
+                <h5>Weight: {weight}</h5>
+                <h5>Height: {height}</h5>
+              </div>
+
+              {/* Pokemon img on the right */}
+              <div
+                className='col s12 m6 center-align'
+                style={{ height: '150px' }}
+              >
+                <img
+                  src={sprites ? sprites.front : ''}
+                  className='pokeimg'
+                  alt='Pokemon'
+                />
+              </div>
+            </div>
+
+            {/* Buttons on the bottom*/}
+
+            {isAuthenticated &&
+            myPokemons &&
+            myPokemons.includes(currentPokemon) ? (
+              // if logged in and it's your pokemon: set it free
+              <button className='btn bgcolor4 col s12' onClick={onDelete}>
+                Set it free...
+              </button>
+            ) : isAuthenticated ? (
+              // if logged in but it's not your pokemon: catch it
+              <button
+                id='catchBtn'
+                className='col s12 btn bgcolor3 rainbowBg'
+                onClick={onClick}
+              >
+                CATCH IT!
+              </button>
+            ) : (
+              // if not logged in: log in
+              <Link to='/login'>
+                <button className='col s12 btn bgcolor2 rainbowBg'>
+                  Login to catch it
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
       </Fragment>
     );

@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
-//import setAuthToken from '../../utils/setAuthToken';
+import setAuthToken from '../../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -11,7 +11,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  DELETE_USER
 } from '../types';
 
 const AuthState = props => {
@@ -25,13 +26,13 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
-  const setAuthToken = token => {
-    if (token) {
-      axios.defaults.headers.common['x-auth-token'] = token;
-    } else {
-      delete axios.defaults.headers.common['x-auth-token'];
-    }
-  };
+  // const setAuthToken = token => {
+  //   if (token) {
+  //     axios.defaults.headers.common['x-auth-token'] = token;
+  //   } else {
+  //     delete axios.defaults.headers.common['x-auth-token'];
+  //   }
+  // };
 
   // Load User
   const loadUser = async () => {
@@ -85,7 +86,19 @@ const AuthState = props => {
   // Logout
   const logout = () => {
     setAuthToken(false);
+
     dispatch({ type: LOGOUT });
+  };
+
+  // Delete User
+  const deleteUser = async id => {
+    try {
+      await axios.delete(`/api/users/${id}`);
+      dispatch({ type: DELETE_USER });
+      setAuthToken(false);
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR, payload: error });
+    }
   };
 
   // Clear Errors
@@ -103,7 +116,8 @@ const AuthState = props => {
         clearErrors,
         loadUser,
         login,
-        logout
+        logout,
+        deleteUser
       }}
     >
       {props.children}

@@ -8,7 +8,7 @@ const CaughtPokemon = ({ name }) => {
         <h4 className='color3 col s12 center-align'>What a great day!</h4>
         <h2 className='col s12 center-align'>You caught {name}!</h2>
 
-        <div className='col s12 section' style={{ marginTop: '30px' }}>
+        <div className='col s12 section' style={{ marginTop: '50px' }}>
           <Link to='/catchem'>
             <button
               className='btn bgcolor3 col s12 m4 l3 offset-m1 offset-l2'

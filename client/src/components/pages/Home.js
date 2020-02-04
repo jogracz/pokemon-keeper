@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Home = props => {
   const authContext = useContext(AuthContext);
-  const { loadUser, isAuthenticated } = authContext;
+  const { isAuthenticated } = authContext;
 
   useEffect(() => {
-    // loadUser();
     if (isAuthenticated) {
       props.history.push('./myPokeball');
     }

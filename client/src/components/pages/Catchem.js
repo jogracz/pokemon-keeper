@@ -3,11 +3,11 @@ import PokemonContext from '../../context/pokemon/pokemonContext';
 import Search from '../pokemons/Search';
 import PokemonItem from '../pokemons/PokemonItem';
 import Spinner from '../layout/Spinner';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 const Catchem = () => {
   const pokemonContext = useContext(PokemonContext);
-  const { foundPokemons, matchingNames, loading } = pokemonContext;
+  const { foundPokemons, matchingNames } = pokemonContext;
 
   return (
     <Fragment>

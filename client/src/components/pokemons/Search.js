@@ -1,16 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import PokemonContext from '../../context/pokemon/pokemonContext';
-//import AlertContext from '../../context/alert/alertContext';
 
 const Search = () => {
   const pokemonContext = useContext(PokemonContext);
-  const {
-    allPokemons,
-    foundPokemons,
-    getAllPokemons,
-    getPokemon,
-    searchPokemons
-  } = pokemonContext;
+  const { searchPokemons } = pokemonContext;
 
   const [text, setText] = useState('');
 

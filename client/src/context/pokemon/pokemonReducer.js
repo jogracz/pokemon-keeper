@@ -5,7 +5,6 @@ import {
   SET_CURRENT,
   GET_MY_POKEMONS,
   CLEAR_MY_POKEMONS,
-  SET_LOADING,
   CLEAR_FOUND,
   ADD_POKEMON,
   POKEMON_ERROR,
@@ -18,32 +17,27 @@ export default (state, action) => {
     case SEARCH_POKEMONS:
       return {
         ...state,
-        matchingNames: action.payload,
-        loading: false
+        matchingNames: action.payload
       };
     case GET_ALL_POKEMONS:
       return {
         ...state,
         allPokemons: action.payload
-        //loading: false
       };
     case GET_POKEMON:
       return {
         ...state,
-        foundPokemons: [...state.foundPokemons, action.payload],
-        loading: true
+        foundPokemons: [...state.foundPokemons, action.payload]
       };
     case SET_CURRENT:
       return {
         ...state,
         currentPokemon: action.payload
-        //loading: false
       };
     case CLEAR_CURRENT:
       return {
         ...state,
         currentPokemon: null
-        //loading: false
       };
     case GET_MY_POKEMONS:
       return {
@@ -62,11 +56,6 @@ export default (state, action) => {
           pokemon => pokemon._id !== action.payload
         )
       };
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: true
-      };
     case CLEAR_FOUND:
       return {
         ...state,
@@ -76,7 +65,6 @@ export default (state, action) => {
       return {
         ...state,
         myPokemons: [...state.myPokemons, action.payload]
-        //loading: false
       };
     case POKEMON_ERROR:
       return {

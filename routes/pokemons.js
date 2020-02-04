@@ -77,7 +77,7 @@ router.get('/:id', (req, res) => {
 router.put('/:id', auth, async (req, res) => {
   const { name, types, sprite } = req.body;
 
-  //Build a contact model
+  //Build a pokemon model
   const pokeFields = {};
   if (name) pokeFields.name = name;
   if (types) pokeFields.types = types;
@@ -87,7 +87,7 @@ router.put('/:id', auth, async (req, res) => {
     let pokemon = await Pokemon.findById(req.params.id);
     if (!pokemon) return res.status(400).json({ msg: 'Pokemon not found' });
 
-    // Make sure user owns this contact
+    // Make sure user owns this pokemon
     if (pokemon.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
@@ -110,10 +110,10 @@ router.put('/:id', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     let pokemon = await Pokemon.findById(req.params.id);
-    // Make sure contact exists
+    // Make sure pokemon exists
     if (!pokemon) return res.status(400).json({ msg: 'Pokemon not found' });
 
-    // Make sure user owns this contact
+    // Make sure user owns this pokemon
     if (pokemon.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }

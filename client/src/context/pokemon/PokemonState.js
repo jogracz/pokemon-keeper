@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
 import axios from 'axios';
 import PokemonContext from './pokemonContext';
 import PokemonReducer from './pokemonReducer';
@@ -7,7 +6,6 @@ import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
   GET_POKEMON,
-  SET_LOADING,
   CLEAR_FOUND,
   POKEMON_ERROR,
   GET_MY_POKEMONS,
@@ -25,8 +23,7 @@ const PokemonState = props => {
     matchingNames: [],
     foundPokemons: [],
     currentPokemon: {},
-    error: null,
-    loading: false
+    error: null
   };
 
   const [state, dispatch] = useReducer(PokemonReducer, initialState);
@@ -75,8 +72,6 @@ const PokemonState = props => {
 
   // Search Pokemons
   const searchPokemons = text => {
-    setLoading();
-
     //Clear FoundPokemoms
     clearFound();
 
@@ -133,13 +128,6 @@ const PokemonState = props => {
     }
   };
 
-  // Clear Current Pokemon
-
-  // Clear Filter
-
-  // Set Loading
-  const setLoading = () => dispatch({ type: SET_LOADING });
-
   return (
     <PokemonContext.Provider
       value={{
@@ -148,7 +136,6 @@ const PokemonState = props => {
         matchingNames: state.matchingNames,
         foundPokemons: state.foundPokemons,
         currentPokemon: state.currentPokemon,
-        loading: state.loading,
         error: state.error,
         getAllPokemons,
         getPokemon,

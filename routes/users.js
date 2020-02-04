@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../models/User');
+const auth = require('../middleware/auth');
+const Pokemon = require('../models/Pokemons');
 
 // @route     POST api/users
 // @desc      Register a user
@@ -70,5 +72,26 @@ router.post(
     }
   }
 );
+
+// // @route     DELETE api/users/:id
+// // @desc      Delete user
+// // @access    Restricted
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    // Make sure user exists
+    let user = await User.findById(req.params.id);
+    if (!user) return res.status(400).json({ msg: 'User not found' });
+
+    // Find and remove its pokemons
+    await Pokemon.find({ user: req.user.id }).remove();
+
+    // Remove user
+    await User.findByIdAndRemove(req.params.id);
+    res.json({ msg: 'User Removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

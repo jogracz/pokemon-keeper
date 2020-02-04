@@ -23,13 +23,10 @@ const Navbar = () => {
     e.preventDefault();
     logout();
     clearMyPokemons();
-    //Redirect to home
-    // clear My Pokemons
   };
 
   const userLinks = (
     <Fragment>
-      {/* My panel */}
       <li>
         <Link to='/myPokeball'>My Pokeball</Link>
       </li>
