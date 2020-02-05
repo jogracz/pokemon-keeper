@@ -56,7 +56,7 @@ const Navbar = () => {
     <nav>
       <div className='nav-wrapper bgcolor1'>
         <Link to='/' className='brand-logo hide-on-small-only left'>
-          Pokemon Keeper
+          {'  '}Pokemon Keeper
         </Link>
         <ul className='right'>
           <li>
