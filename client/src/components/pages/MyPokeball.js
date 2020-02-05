@@ -53,7 +53,7 @@ const MyPokeball = () => {
 
           <div
             className='divider col s12'
-            style={{ marginBottom: '30px' }}
+            style={{ marginBottom: '15px' }}
           ></div>
 
           <div className='flexbox col s12'>
