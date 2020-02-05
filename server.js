@@ -3,11 +3,6 @@ const connectDB = require('./config/db');
 const app = express();
 const path = require('path');
 
-// GET
-app.get('/', (req, res) =>
-  res.json({ msg: 'Welcome to the PokemonKeeper API!' })
-);
-
 // Connect Database
 connectDB();
 
