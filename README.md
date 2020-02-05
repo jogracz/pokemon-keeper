@@ -1,7 +1,7 @@
 # pokemon-keeper
 Fullstack application for keeping Pokemons 
 
-MongoDB (Atlas), Express, React, Context API and Hooks.
+MongoDB (Atlas), Express, React, Context API, Hooks and Materialize CSS.
 
 I created this app following Brad Traversy's Udemy "React front to back' course and combining several projects.
 
