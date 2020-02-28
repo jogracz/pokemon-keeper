@@ -115,11 +115,7 @@ const Pokemon = props => {
             </Link>
           </div>
 
-          <div
-            id='toCatch'
-            className='col s12 m10 l8 xl6 offset-m1 offset-xl1'
-            style={{}}
-          >
+          <div id='toCatch' className='col s12 m10 l8 xl6 offset-m1 offset-xl1'>
             {/* Pokemon's name on top */}
             <div className='col s12'>
               <h3 className='center-align'>{name}</h3>
@@ -146,7 +142,7 @@ const Pokemon = props => {
                 <h6>Weight: {weight}</h6>
                 <h6>Height: {height}</h6>
                 {level && <h6>Level: {level}</h6>}
-                {moves && (
+                {moves && moves.length > 0 && (
                   <h6>
                     Moves:
                     {moves.map((move, i) => (
