@@ -3,28 +3,8 @@ const Pokemon = require('../models/Pokemons');
 const fetch = require('node-fetch');
 const getRandomBetween = require('../client/src/utils/getRandomBetween');
 const getRandomMoves = require('../client/src/utils/getRandomMoves');
+
 connectDB();
-
-// // Get random number between minand max
-// const getRandomBetween = (min, max) => {
-//   min = Math.ceil(min);
-//   max = Math.floor(max);
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// };
-
-// // Get random moves
-// const getRandomMoves = (moves, times) => {
-//   // if there's less than 2 moves, just return them
-//   if (moves.length <= times) return moves;
-//   const result = [];
-//   while (times > 0) {
-//     const randomIndex = getRandomBetween(0, moves.length - 1);
-//     result.push(moves[randomIndex]);
-//     moves.splice(randomIndex, 1);
-//     times -= 1;
-//   }
-//   return result;
-// };
 
 const updatePokeLevelAndMoves = async () => {
   try {
@@ -54,12 +34,12 @@ const updatePokeLevelAndMoves = async () => {
         pokemon.moves = getRandomMoves(moves, 2);
       }
 
-      // //update in DB
-      // await Pokemon.findByIdAndUpdate(
-      //   pokemon.id,
-      //   { $set: pokemon },
-      //   { new: true }
-      // );
+      //update in DB
+      await Pokemon.findByIdAndUpdate(
+        pokemon.id,
+        { $set: pokemon },
+        { new: true }
+      );
     });
   } catch (err) {
     console.error(err.message);

@@ -140,27 +140,6 @@ const PokemonState = props => {
     }
   };
 
-  // // Get random number between minand max
-  // const getRandomBetween = (min, max) => {
-  //   min = Math.ceil(min);
-  //   max = Math.floor(max);
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // };
-
-  // Get random moves
-  // const getRandomMoves = (moves, times) => {
-  //   if (moves.length <= times) return moves;
-  //   const result = [];
-  //   let randomIndex;
-  //   while (times > 0) {
-  //     randomIndex = getRandomBetween(0, moves.length - 1);
-  //     result.push(moves[randomIndex]);
-  //     moves.splice(randomIndex, 1);
-  //     times -= 1;
-  //   }
-  //   return result;
-  // };
-
   return (
     <PokemonContext.Provider
       value={{
