@@ -24,8 +24,12 @@ const Pokemon = props => {
     base_experience,
     sprites,
     _id,
-    types
+    types,
+    level,
+    moves
   } = currentPokemon;
+
+  console.log(moves);
 
   const [caught, setCaught] = useState(false);
   const [prevPage, setPrevPage] = useState('/catchem');
@@ -103,25 +107,25 @@ const Pokemon = props => {
       <Fragment>
         <div className='row'>
           {/* Back to previous page links */}
-          <div className='col s12 l2'>
+          <div className='col s2 l2'>
             <Link to={prevPage}>
-              <h2 className='color5'>
+              <h3 className='color5' style={{ marginBottom: '0px' }}>
                 <i className='fa fa-arrow-circle-left'></i>
-              </h2>
+              </h3>
             </Link>
           </div>
 
-          <div id='toCatch' className='col s12 l8' style={{}}>
+          <div id='toCatch' className='col s12 m10 l8 xl6 offset-m1 offset-xl1'>
             {/* Pokemon's name on top */}
             <div className='col s12'>
-              <h2 className='center-align'>{name}</h2>
+              <h3 className='center-align'>{name}</h3>
             </div>
             {/* Properties and picture div */}
-            <div className='col s12' style={{ marginBottom: '50px' }}>
+            <div className='col s12' style={{ marginBottom: '10px' }}>
               {/* Pokemon's properties on the left*/}
-              <div className='col s12 m6'>
+              <div className='col s10 m6 offset-s1'>
                 {/* Types */}
-                <h5>
+                <h6>
                   {types && types.length > 1 ? 'Types' : 'Type'}
                   {types &&
                     types.map(type => (
@@ -133,10 +137,19 @@ const Pokemon = props => {
                         {type.type.name}
                       </span>
                     ))}
-                </h5>
-                <h5>Base Experience: {base_experience}</h5>
-                <h5>Weight: {weight}</h5>
-                <h5>Height: {height}</h5>
+                </h6>
+                <h6>Base Experience: {base_experience}</h6>
+                <h6>Weight: {weight}</h6>
+                <h6>Height: {height}</h6>
+                {level && <h6>Level: {level}</h6>}
+                {moves && moves.length > 0 && (
+                  <h6>
+                    Moves:
+                    {moves.map((move, i) => (
+                      <small key={i}> {move['move']['name']} </small>
+                    ))}
+                  </h6>
+                )}
               </div>
 
               {/* Pokemon img on the right */}

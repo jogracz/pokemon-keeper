@@ -42,7 +42,7 @@ const MyPokeball = () => {
     return (
       <Fragment>
         <div className='row'>
-          <h2 className='color1 col s12'>My Pokeball</h2>
+          <h3 className='color1 col s12'>My Pokeball</h3>
           <h5 className='col s4'>
             Hello <span className='color1'>{user && user.name}</span>
           </h5>
@@ -53,7 +53,7 @@ const MyPokeball = () => {
 
           <div
             className='divider col s12'
-            style={{ marginBottom: '30px' }}
+            style={{ marginBottom: '15px' }}
           ></div>
 
           <div className='flexbox col s12'>

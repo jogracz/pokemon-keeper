@@ -55,8 +55,8 @@ const Navbar = () => {
   return (
     <nav>
       <div className='nav-wrapper bgcolor1'>
-        <Link to='/' className='brand-logo hide-on-med-and-down'>
-          Pokemon Keeper
+        <Link to='/' className='brand-logo hide-on-small-only left'>
+          <span style={{ marginLeft: '10px' }}>Pokemon Keeper</span>
         </Link>
         <ul className='right'>
           <li>

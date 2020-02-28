@@ -22,12 +22,12 @@ body {
 
 span.badge {
   float: none;
-  font-size: 1.2rem !important;
+  font-size: 0.9rem !important;
 }
 
 .card {
-  height: 240px;
-  width: 200px;
+  height: 200px;
+  width: 160px;
 }
 .flexcontent {
   margin: 10px 20px;
@@ -216,13 +216,13 @@ label:focus {
 }
 
 .pokeimg {
-  width: 180px;
+  width: 140px;
   position: relative;
 }
 
 .emptyPokeball {
-  height: 250px;
-  margin-top: 7px;
+  height: 200px;
+  margin-top: 8px;
 }
 
 .rainbowBg:hover,

@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import PokemonContext from './pokemonContext';
 import PokemonReducer from './pokemonReducer';
+import getRandomBetween from '../../utils/getRandomBetween';
+import getRandomMoves from '../../utils/getRandomMoves';
 import {
   SEARCH_POKEMONS,
   GET_ALL_POKEMONS,
@@ -47,7 +49,9 @@ const PokemonState = props => {
       height: '',
       base_experience: '',
       types: [],
-      sprites: {}
+      sprites: {},
+      level: null,
+      moves: null
     };
     pokemon.id = res.data.id;
     pokemon.name = res.data.name;
@@ -57,6 +61,14 @@ const PokemonState = props => {
     pokemon.types = res.data.types;
     pokemon.sprites.front = res.data.sprites.front_default;
     pokemon.sprites.back = res.data.sprites.back_default;
+
+    // Add level: random between 1 and 100
+    const randomLevel = getRandomBetween(1, 100);
+    pokemon.level = randomLevel;
+
+    // Add moves: 2 random from moves array
+    const moves = res.data.moves;
+    pokemon.moves = getRandomMoves(moves, 2);
 
     dispatch({ type: GET_POKEMON, payload: pokemon });
   };

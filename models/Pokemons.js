@@ -24,6 +24,12 @@ const PokemonSchema = mongoose.Schema({
   },
   base_experience: {
     type: String
+  },
+  level: {
+    type: Number
+  },
+  moves: {
+    type: [Object]
   }
 });
 
