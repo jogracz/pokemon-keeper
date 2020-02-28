@@ -42,7 +42,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, types, sprites, weight, height, base_experience } = req.body;
+    const {
+      name,
+      types,
+      sprites,
+      weight,
+      height,
+      base_experience,
+      level,
+      moves
+    } = req.body;
 
     try {
       pokemon = new Pokemon({
@@ -52,6 +61,8 @@ router.post(
         weight,
         height,
         base_experience,
+        level,
+        moves,
         user: req.user.id
       });
 

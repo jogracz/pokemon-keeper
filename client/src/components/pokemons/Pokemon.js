@@ -24,8 +24,12 @@ const Pokemon = props => {
     base_experience,
     sprites,
     _id,
-    types
+    types,
+    level,
+    moves
   } = currentPokemon;
+
+  console.log(moves);
 
   const [caught, setCaught] = useState(false);
   const [prevPage, setPrevPage] = useState('/catchem');
@@ -141,6 +145,15 @@ const Pokemon = props => {
                 <h6>Base Experience: {base_experience}</h6>
                 <h6>Weight: {weight}</h6>
                 <h6>Height: {height}</h6>
+                {level && <h6>Level: {level}</h6>}
+                {moves && (
+                  <h6>
+                    Moves:
+                    {moves.map((move, i) => (
+                      <small key={i}> {move['move']['name']} </small>
+                    ))}
+                  </h6>
+                )}
               </div>
 
               {/* Pokemon img on the right */}

@@ -47,7 +47,9 @@ const PokemonState = props => {
       height: '',
       base_experience: '',
       types: [],
-      sprites: {}
+      sprites: {},
+      level: null,
+      moves: null
     };
     pokemon.id = res.data.id;
     pokemon.name = res.data.name;
@@ -57,6 +59,14 @@ const PokemonState = props => {
     pokemon.types = res.data.types;
     pokemon.sprites.front = res.data.sprites.front_default;
     pokemon.sprites.back = res.data.sprites.back_default;
+
+    // Add level: random between 1 and 100
+    const randomLevel = getRandomBetween(1, 100);
+    pokemon.level = randomLevel;
+
+    // Add moves: 2 random from moves array
+    const moves = res.data.moves;
+    pokemon.moves = getRandomMoves(moves, 2);
 
     dispatch({ type: GET_POKEMON, payload: pokemon });
   };
@@ -126,6 +136,27 @@ const PokemonState = props => {
     } catch (error) {
       dispatch({ type: POKEMON_ERROR, payload: error });
     }
+  };
+
+  // Get random number between minand max
+  const getRandomBetween = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  // Get random moves
+  const getRandomMoves = (moves, times) => {
+    if (moves.length <= times) return moves;
+    const result = [];
+    let randomIndex;
+    while (times > 0) {
+      randomIndex = getRandomBetween(0, moves.length - 1);
+      result.push(moves[randomIndex]);
+      moves.splice(randomIndex, 1);
+      times -= 1;
+    }
+    return result;
   };
 
   return (
